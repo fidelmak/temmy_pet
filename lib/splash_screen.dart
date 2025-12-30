@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:temmy_pet/view/onboarding_view/onboarding_view.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -22,22 +25,32 @@ class SplashScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 70),
+              SizedBox(height: 80.h),
               Text(
                 'Get Pet',
                 style: GoogleFonts.poppins(
-                  fontSize: 54,
+                  fontSize: 54.sp,
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                'Take care of your pets ',
-                style: TextStyle(fontSize: 14, color: Colors.brown),
+                'Adopt your desired pet  ',
+                style: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  color: Colors.brown,
+                ),
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go('/onboardingView');
+        },
+        backgroundColor: Color(0xFFa5bdbd),
+        child: Icon(Icons.arrow_forward, color: Colors.white, size: 34.sp),
       ),
     );
   }
