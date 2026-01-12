@@ -13,9 +13,9 @@ class _OnboardingViewState extends State<OnboardingView> {
   int _currentPage = 0;
 
   final List<String> images = [
-    'https://example.com/images/nvmcc.png', // Replace with your actual URL
-    'https://example.com/images/onb2.png', // Replace with your actual URL
-    'https://example.com/images/onb3.png', // Replace with your actual URL
+    'https://i.pinimg.com/736x/bf/36/fa/bf36fabb0b3548ec6d85752f5b40e55c.jpg', // Replace with your actual URL
+    'https://i.pinimg.com/736x/97/21/7e/97217e8818e89035a75bf45c6971b4b3.jpg', // Replace with your actual URL
+    'https://i.pinimg.com/1200x/03/ac/0b/03ac0b61d930890157998108b18afc35.jpg', // Replace with your actual URL
   ];
 
   final List<String> firstText = [
@@ -58,7 +58,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     height: screenHeight * 0.6,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(images[index]), // Image path
+                        image: NetworkImage(images[index]), // Image path
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -128,7 +128,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                           margin: EdgeInsets.symmetric(horizontal: 5.sp),
                           decoration: BoxDecoration(
                             color: _currentPage == index
-                                ? Colors.red
+                                ? Colors.black
                                 : Colors.grey,
                             borderRadius: BorderRadius.circular(5.r),
                           ),
@@ -142,10 +142,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      minimumSize: Size(260.sp, 48.sp), // Adjusted button size
-                      backgroundColor: Color(
-                        0xffFF2F13,
-                      ), // Retained background color
+                      minimumSize: Size(260.sp, 48.sp),
+                      backgroundColor: Colors.black, // Adjusted button size
+
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                           5.r,
@@ -162,33 +161,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.sp),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      minimumSize: Size(260.sp, 48.sp), // Adjusted button size
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          5.r,
-                        ), // Radius applied
-                        side: BorderSide(
-                          color: Colors.brown,
-                          width: 1.5,
-                        ), // Outline style
-                      ),
-                    ),
-                    child: Text(
-                      "Login",
-                      style: GoogleFonts.poppins(
-                        color: Color(0xffFF2F13),
 
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.sp, // Adjusted font size
-                      ),
-                    ),
-                  ),
                   SizedBox(height: 7.sp),
                 ],
               ),
