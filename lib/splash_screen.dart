@@ -50,7 +50,7 @@ class SplashScreen extends StatelessWidget {
           context.go('/onboardingView');
         },
         backgroundColor: Color(0xFFa5bdbd),
-        child: Icon(Icons.arrow_forward, color: Colors.white, size: 34.sp),
+        child: Icon(Icons.arrow_forward, color: Colors.black, size: 34.sp),
       ),
     );
   }

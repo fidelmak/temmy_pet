@@ -51,16 +51,13 @@ class _OnboardingViewState extends State<OnboardingView> {
               },
               itemCount: images.length,
               itemBuilder: (context, index) {
-                return ClipPath(
-                  clipper: CurveClipper(),
-                  child: Container(
-                    width: screenWidth,
-                    height: screenHeight * 0.6,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(images[index]), // Image path
-                        fit: BoxFit.cover,
-                      ),
+                return Container(
+                  width: screenWidth,
+                  height: screenHeight * 0.6,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(images[index]), // Image path
+                      fit: BoxFit.cover,
                     ),
                   ),
                 );
@@ -181,8 +178,10 @@ class CurveClipper extends CustomClipper<Path> {
     Path path = Path();
     path.lineTo(0, size.height - 40);
     path.quadraticBezierTo(
-      size.width / 2,
-      size.height + 30,
+      size.width,
+
+      /// 2,
+      size.height, // + 30,
       size.width,
       size.height - 40,
     );
