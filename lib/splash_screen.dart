@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:temmy_pet/view/onboarding_view/onboarding_view.dart';
+import 'package:temmy_pet/widget/extension.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -28,17 +29,23 @@ class SplashScreen extends StatelessWidget {
               SizedBox(height: 80.h),
               Text(
                 'Get Pet',
-                style: GoogleFonts.poppins(
-                  fontSize: 54.sp,
-                  color: Colors.brown,
+                style: GoogleFonts.archivoBlack(
+                  fontSize: context.screenHeight / 10.sp,
+                  color: Colors.yellowAccent,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                'Adopt your desired pet  ',
-                style: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  color: Colors.brown,
+              SizedBox(
+                width: context.screenWidth / 1.2.sp,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Adopt your desired pet  ',
+                  style: GoogleFonts.romanesco(
+                    fontSize: context.screenHeight / 20.sp,
+                    color: Colors.brown,
+                    letterSpacing: 2.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
@@ -50,7 +57,7 @@ class SplashScreen extends StatelessWidget {
           context.go('/onboardingView');
         },
         backgroundColor: Color(0xFFa5bdbd),
-        child: Icon(Icons.arrow_forward, color: Colors.black, size: 34.sp),
+        child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 14.sp),
       ),
     );
   }

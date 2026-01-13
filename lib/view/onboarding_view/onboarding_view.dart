@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:temmy_pet/widget/button.dart';
+import 'package:temmy_pet/widget/dash_lne.dart';
+import 'package:temmy_pet/widget/extension.dart';
 
 class OnboardingView extends StatefulWidget {
   @override
@@ -11,11 +14,12 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  bool isLoading = false;
 
   final List<String> images = [
     'https://i.pinimg.com/736x/bf/36/fa/bf36fabb0b3548ec6d85752f5b40e55c.jpg', // Replace with your actual URL
-    'https://i.pinimg.com/736x/97/21/7e/97217e8818e89035a75bf45c6971b4b3.jpg', // Replace with your actual URL
-    'https://i.pinimg.com/1200x/03/ac/0b/03ac0b61d930890157998108b18afc35.jpg', // Replace with your actual URL
+    'https://i.pinimg.com/1200x/62/78/62/627862bbe2b8c11fe130225ff5414b04.jpg', // Replace with your actual URL
+    'https://i.pinimg.com/1200x/a5/ec/84/a5ec84facaf0a002cf7093c56ad17e55.jpg', // Replace with your actual URL
   ];
 
   final List<String> firstText = [
@@ -32,16 +36,13 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
           // curve starts here
           Container(
-            height: screenHeight * 0.6,
+            height: context.screenHeight * 0.6,
             child: PageView.builder(
               controller: _pageController,
               onPageChanged: (index) {
@@ -52,19 +53,32 @@ class _OnboardingViewState extends State<OnboardingView> {
               itemCount: images.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: screenWidth,
-                  height: screenHeight * 0.6,
+                  width: context.screenWidth,
+                  height: context.screenHeight * 0.6,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(images[index]), // Image path
-                      fit: BoxFit.cover,
-                    ),
+                    image: isLoading
+                        ? null
+                        : DecorationImage(
+                            image: NetworkImage(images[index]),
+                            fit: BoxFit.cover,
+                            onError: (error, stackTrace) {
+                              // Handle error silently or log it
+                              print('Error loading image: $error');
+                            },
+                          ),
+                    color: isLoading ? Colors.grey[300] : null,
                   ),
+                  child: isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+                      : null,
                 );
               },
             ),
           ),
-
           // curve ends here,
 
           // the slider text starta here
@@ -79,13 +93,13 @@ class _OnboardingViewState extends State<OnboardingView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: screenWidth / 1.2,
+                    width: context.screenWidth / 1.2,
                     child: Text(
                       firstText[_currentPage],
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize:
-                            28.sp, //screenHeight / 30, // Adjusted font size
+                            context.screenHeight / 30.sp, // Adjusted font size
                         color: Color(0xff020202),
                         height: 1.2, // Reduced text height spacing to 1.2
                       ),
@@ -94,13 +108,13 @@ class _OnboardingViewState extends State<OnboardingView> {
                   ),
                   SizedBox(height: 8.sp),
                   SizedBox(
-                    width: screenWidth / 1.2,
+                    width: context.screenWidth / 1.2,
                     child: Text(
                       secondText[_currentPage],
                       style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w200,
                         fontSize:
-                            14.sp, //screenHeight / 50, // Adjusted font size
+                            context.screenHeight / 50.sp, // Adjusted font size
                         color: Colors.black87,
                         height: 1.2, // Reduced text height spacing to 1.2
                       ),
@@ -108,58 +122,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                     ),
                   ),
                   SizedBox(height: 20.sp),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(images.length, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          _pageController.animateToPage(
-                            index,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        child: Container(
-                          width: _currentPage == index ? 30.sp : 10.sp,
-                          height: 5.sp,
-                          margin: EdgeInsets.symmetric(horizontal: 5.sp),
-                          decoration: BoxDecoration(
-                            color: _currentPage == index
-                                ? Colors.black
-                                : Colors.grey,
-                            borderRadius: BorderRadius.circular(5.r),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-
-                  SizedBox(height: 10.sp),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      minimumSize: Size(260.sp, 48.sp),
-                      backgroundColor: Colors.black, // Adjusted button size
-
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          5.r,
-                        ), // Radius applied
-                      ),
-                    ),
-                    child: Text(
-                      "Get Started",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.sp, // Adjusted font size
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 7.sp),
+                  customButton(context),
+                  SizedBox(height: 50.sp),
+                  dashLine(images, _pageController, _currentPage),
+                  SizedBox(height: 2.h),
                 ],
               ),
             ),
